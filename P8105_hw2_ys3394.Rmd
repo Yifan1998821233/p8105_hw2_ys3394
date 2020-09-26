@@ -25,8 +25,35 @@ trash_df =
     sport_balls = round(sports_balls),
     sport_balls = as.integer(sports_balls)
   )
-
-
 ```
 
+Read and clean precipitation data for 2017 and 2018.
+
+```{r}
+pre_2018 = 
+  read_xlsx(
+    "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+    sheet = "2018 Precipitation",
+    skip = 1) %>% 
+  janitor::clean_names() %>% 
+  drop_na(month) %>% 
+  mutate(year = 2018) %>% 
+  relocate(year)
+
+pre_2017 = 
+  read_xlsx(
+    "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+    sheet = "2017 Precipitation",
+    skip = 1) %>% 
+  janitor::clean_names() %>% 
+  drop_na(month) %>% 
+  mutate(year = 2017) %>% 
+  relocate(year)
+```
+
+Then, combine two precipitation datasets.
+
+```{r}
+
+```
 
