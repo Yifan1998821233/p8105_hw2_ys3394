@@ -1,0 +1,32 @@
+---
+title: "P8105_hw2_ys3394"
+author: Yifan Su
+output: github_document
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+## Problem 1
+
+Read and clean the Mr. Trach Wheel dataset.
+
+```{r}
+trash_df =
+  read_xlsx(
+    "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
+    sheet = "Mr. Trash Wheel",
+    range = cell_cols("A:N")) %>% 
+  janitor::clean_names() %>% 
+  drop_na(dumpster) %>% 
+  mutate(
+    sport_balls = round(sports_balls),
+    sport_balls = as.integer(sports_balls)
+  )
+
+
+```
+
+
