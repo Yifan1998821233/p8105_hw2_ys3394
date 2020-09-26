@@ -54,6 +54,19 @@ pre_2017 =
 Then, combine two precipitation datasets.
 
 ```{r}
+month_df =
+  tibble(
+    month = 1:12,
+    month_name = month.name)
 
+pre_df =
+  bind_rows(pre_2018, pre_2017)
+
+left_join(pre_df, month_df, by = "month")
+
+trash_dfm = 
+  filter(trash_df, year == "2017")
 ```
+
+Mr.Trash Wheel is a vessel removes trash in Baltimore, Maryland since 2014. The dataset is about the information stored in the dumpster, including month, year, volumes and types of trash. For the data of precipitation in 2018, there are `r nrow(pre_2018)` rows. The median number of sports balls in the dumpster in 2017 is `r median(pull(trash_dfm, sport_balls))`.
 
