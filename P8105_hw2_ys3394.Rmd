@@ -68,5 +68,29 @@ trash_dfm =
   filter(trash_df, year == "2017")
 ```
 
-Mr.Trash Wheel is a vessel removes trash in Baltimore, Maryland since 2014. The dataset is about the information stored in the dumpster, including month, year, volumes and types of trash. For the data of precipitation in 2018, there are `r nrow(pre_2018)` rows. The median number of sports balls in the dumpster in 2017 is `r median(pull(trash_dfm, sport_balls))`.
+Mr.Trash Wheel is a vessel removes trash in Baltimore, Maryland since 2014. The dataset is about the information stored in the dumpster, including month, year, volumes and types of trash. For the data of precipitation in 2018, there are `r nrow(pre_2018)` rows, and the total precipitation in 2018 is `r sum(pull(pre_2018, total))`. The median number of sports balls in the dumpster in 2017 is `r median(pull(trash_dfm, sport_balls))`.
+
+
+## Problem 2
+
+Read and clean the NYC Transit dataset.
+
+```{r}
+NYC_df = 
+  read_csv(
+    "./data2/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%   
+  janitor::clean_names() %>% 
+  select(line:entry, vending, ada) %>% 
+  mutate(entry = if_else(entry == "YES", 1, 0))
+```
+
+Write a paragraph.
+
+Answer some questions about the data.
+
+```{r}
+nrow(distinct(NYC_df, line, station_name))
+nrow(filter(NYC_df, ada == "TRUE"))
+nrow(filter(NYC_df, vending == "NO")) / nrow(NYC_df)
+```
 
