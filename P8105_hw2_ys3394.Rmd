@@ -122,7 +122,7 @@ head(NYC_tidy)
 
 There are `r NYC_tidy %>% filter(route_num == "A") %>% distinct(station_name, line) %>% count()` distinct stations that serve the A train. 
 
-Among thee stations, there are `r NYC_tidy %>% filter(route_num == "A") %>% filter(ada == "TRUE") %>% count()` stations that are ADA compliant.
+Among thee stations, there are `r NYC_tidy %>% filter(route_num == "A") %>% distinct(station_name, line, ada) %>% filter(ada == "TRUE") %>% count()` stations that are ADA compliant.
 
 
 ## Problem 3
