@@ -99,7 +99,7 @@ NYC_df =
 head(NYC_df)
 ```
 
-In the NYC transit dataset, there are key variables **_`r names(NYC_df)`_**. By now, I've read the csv file with the readxl package, select required columns, and converted the entry variable from the character variable to the logical variable. It can bee seen from the tibble bellow, which is head rows of `NYC_df`. The dataset is a `r NYC_df %>% nrow()` X `r NYC_df %>% ncol()` tibble. The dataset is not yet tidy, there are variables such as those inconsistent route numbers and names, can be modified.
+In the NYC transit dataset, there are key variables **_`r names(NYC_df)`_**. By now, I've read the csv file with the `readxl` package, select required columns, and converted the entry variable from the character variable to the logical variable. It can bee seen from the tibble bellow, which is the head rows of `NYC_df`. The dataset is a `r NYC_df %>% nrow()` X `r NYC_df %>% ncol()` tibble. The dataset is not yet tidy, there are variables such as those inconsistent route numbers and names, can be modified.
 
 * There are `r nrow(distinct(NYC_df, line, station_name))` distinct stations in the dataset.
 
@@ -225,13 +225,13 @@ head(comb_df)
 
 **Summary**
 
-* In dataset pols_df, there is a `r nrow(pols_df)` X `r ncol(pols_df)` tibble, with the year range from `r min(pull(pols_df, year))` to `r max(pull(pols_df, year))`. Key variables in this dataframe are **_president, sen_dem_**, etc.
+* In dataset pols_df, there is a `r nrow(pols_df)` X `r ncol(pols_df)` tibble with the year range from `r min(pull(pols_df, year))` to `r max(pull(pols_df, year))`. Key variables in this dataframe are **_president, sen_dem_**, etc.
 
 * In dataset snp_df, it has `r nrow(snp_df)` rows and `r ncol(snp_df)` columns. The year range is from year `r min(pull(snp_df, year))` to year `r max(pull(snp_df, year))`. Key variables of it consist of **_`r names(snp_df)`_** .
 
 * In dataset unemployment_df, it's a `r nrow(unemployment_df)` X `r ncol(unemployment_df)` tibble with the range of year from `r min(pull(unemployment_df, year))` to year `r min(pull(unemployment_df, year))`. Key variables are **_`r names(unemployment_df)`_** .
 
-* In the combined dataset, three tibbles that sharing variable `year` and `montn_name` are combine together by `left_join`. there are some key variables **_`r names(comb_df)`_** . The combined dataset has `r nrow(comb_df)` rows with `r ncol(comb_df)` columns. The range of the dataset is `r distinct(comb_df, year) %>% count()-1` years, from `r min(pull(comb_df, year))` to `r max(pull(comb_df, year))`.
+* In the combined dataset, three tibbles that sharing variables `year` and `montn_name` are combine together by `left_join`, and there are some key variables: **_`r names(comb_df)`_** . The combined dataset has `r nrow(comb_df)` rows with `r ncol(comb_df)` columns. The range of the dataset is `r distinct(comb_df, year) %>% count()-1` years, from `r min(pull(comb_df, year))` to `r max(pull(comb_df, year))`.
 
 
 
