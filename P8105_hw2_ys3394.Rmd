@@ -14,7 +14,7 @@ library(readxl)
 
 #### Read and clean the Mr. Trach Wheel dataset.
 
-```{r trash_df, message = FALSE}
+```{r trash_df, message = FALSE, collapse = TRUE}
 trash_df =
   read_xlsx( # read the xlsx.
     "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
@@ -27,13 +27,14 @@ trash_df =
     sport_balls = as.integer(sports_balls)
   ) %>% 
   relocate(dumpster, year, month, everything())
+
 head(trash_df)
 ```
 
 #### Read and clean precipitation data for 2017 and 2018.
 
 ```{r pre_2017&2018, message = FALSE}
-#load pre_2018 dataset
+# Load pre_2018 dataset
 pre_2018 = 
   read_xlsx(
     "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
@@ -44,7 +45,7 @@ pre_2018 =
   mutate(year = 2018) %>%  # add a column showing the year
   relocate(year)
 
-#load pre_2017 dataset
+# Load pre_2017 dataset
 pre_2017 = 
   read_xlsx(
     "./data2/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
@@ -58,8 +59,9 @@ pre_2017 =
 
 Then, combine two precipitation datasets.
 
-```{r pre_df, message = FALSE}
-month_df =  # create a month tibble, and left_join original pre_df data
+```{r pre_df, message = FALSE, collapse = TRUE}
+# Create a month tibble, and left_join original pre_df data
+month_df = 
   tibble(
     month = 1:12,
     month_name = month.name)
@@ -67,6 +69,7 @@ month_df =  # create a month tibble, and left_join original pre_df data
 pre_df =
   bind_rows(pre_2018, pre_2017) %>%
   left_join(month_df, by = "month")
+
 str(pre_df)
 ```
 
@@ -82,8 +85,9 @@ Mr.Trash Wheel is a vessel removes trash in Baltimore, Maryland since 2014. The 
 
 #### Read and clean the NYC Transit dataset.
 
-```{r NYC_df, message = FALSE}
-rm(list = ls()) # remove previous variables from the environment
+```{r NYC_df, message = FALSE, collapse = TRUE}
+# Remove previous variables from the environment
+rm(list = ls()) 
 
 NYC_df = 
   read_csv(
@@ -91,6 +95,7 @@ NYC_df =
   janitor::clean_names() %>% 
   select(line:entry, vending, ada) %>%  # select those columns
   mutate(entry = if_else(entry == "YES", 1, 0))
+
 head(NYC_df)
 ```
 
@@ -104,7 +109,8 @@ In the NYC transit dataset, there are key variables **_`r names(NYC_df)`_**. By 
 
 #### Reformate data, make route number and route name distinct variables.
 
-```{r NYC_tidy, message = FALSE}
+```{r NYC_tidy, message = FALSE, collapse = TRUE}
+# Tidy the NYC_df to be NYC_tidy
 NYC_tidy = 
   NYC_df %>% 
   mutate(  # convert route8:rout11 to character variables
@@ -119,6 +125,7 @@ NYC_tidy =
     values_to = "route_num"
   ) %>% 
   drop_na(route_num)
+
 head(NYC_tidy)
 ```
 
@@ -133,13 +140,14 @@ head(NYC_tidy)
 
 Clean the data in pols_month.csv.
 
-```{r pols_df, warning = FALSE, message = FALSE}
+```{r pols_df, warning = FALSE, message = FALSE, collapse = TRUE}
 rm(list = ls())
 
 month_df =
   tibble(
     month = 1:12,
     month_name = month.name)
+
 # Tidy the pols_dy data
 pols_df = 
   read_csv(
@@ -156,12 +164,13 @@ pols_df =
     names_prefix = "prez_"
   ) %>% 
   relocate(year, month_name, everything()) # everythng(), commonly used
+
 str(pols_df)
 ```
 
 Clean the data in snp.csv using the similar process.
 
-```{r snp_df, warning = FALSE, message = FALSE}
+```{r snp_df, warning = FALSE, message = FALSE, collapse = TRUE}
 # Tidy the snp_df data
 snp_df = 
   read_csv(
@@ -172,13 +181,14 @@ snp_df =
   left_join(month_df, by = "month") %>% 
   select(-month) %>% 
   relocate(year, month_name, everything())
+
 str(snp_df)
 ```
 
 Tidy the unemployment.csv dataset.
 
-```{r unemployment_df, warning = FALSE, message = FALSE}
-# create another month tibble
+```{r unemployment_df, warning = FALSE, message = FALSE, collapse = TRUE}
+# Create another month tibble
 month_df2 =
   tibble(
     month = c("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"),
@@ -198,16 +208,18 @@ unemployment_df =
   left_join(month_df2, by = "month") %>% 
   select(-month) %>% 
   relocate(year, month_name, everything())
+
 str(unemployment_df)
 ```
 
 #### Join three datasets by year and month
 
-```{r comb_df, message = FALSE}
+```{r comb_df, message = FALSE, collapse = TRUE}
 comb_df =  # left_join three dfs
   left_join(pols_df, snp_df, by = c("year", "month_name")) %>% 
   left_join(unemployment_df, by = c("year", "month_name")) %>% 
  relocate(year, month_name, everything())
+
 head(comb_df)
 ```
 
